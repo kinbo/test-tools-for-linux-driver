@@ -1,3 +1,9 @@
+/*
+This file is copy from internet.
+Modify by kinbo.
+2017-07-27
+*/
+
 #include <sys/types.h>  
 #include <sys/stat.h>  
 #include <fcntl.h>  

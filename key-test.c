@@ -1,3 +1,8 @@
+/*
+write by kinbo 
+modify 2017-07-27
+*/
+
 #include "stdio.h"
 #include <sys/types.h>
 #include <sys/stat.h>
