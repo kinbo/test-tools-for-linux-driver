@@ -31,3 +31,9 @@ you can this file to test your key driver.
 gpio_test.sh
 This shell script can test lot size GPIO that you want test.
 ###############################################
+
+ATBSPGIO.py
+This script base on Secure-CRT.
+To test AT-command on modem side.
+###############################################
+
