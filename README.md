@@ -49,3 +49,25 @@ EC60B1520402 rotational encoder test(two input key)
 use rotational encoder to control volume
 
 ###############################################
+
+rotational_encoder_test-fail.sh
+
+this is a fail shell to test EC60B1520402 rotational encoder.
+
+just for information and warning.
+
+###############################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
