@@ -31,17 +31,20 @@ you can this file to test your key driver.
 gpio_test.sh
 
 This shell script can test lot size GPIO that you want test.
+
 ###############################################
 
 pwm_fan_test.sh
 
- we use two pwms to control two fans.
- this shell script can control fan level.
+we use two pwms to control two fans.
+ 
+this shell script can control fan level.
+ 
 ###############################################
 
 rotational_encoder_test.c
 
-EC60B1520402 rotational encoder test.
+EC60B1520402 rotational encoder test(two input key)
 
 use rotational encoder to control volume
 
