@@ -66,6 +66,30 @@ we can use pyinstaller to produce exe program that run on windows.
 
 ###############################################
 
+routerCheckToo.py
+
+this python script base on vocie_board_test.py.
+
+1. fan test on voice board
+
+2. led test on voice board
+
+3. tinyplay on voice board
+
+4. ssh(LAN) test on master board
+
+5. wifi test on master board
+
+6. fdisk harddisk test on master board
+
+7. fdisk USB test on master board
+
+8. ZIGBEE test on master board
+
+9. bluetooth test on master board
+
+###############################################
+
 
 
 
