@@ -58,8 +58,13 @@ just for information and warning.
 
 ###############################################
 
+vocie_board_test.py
 
+this python script can test fan led tinyplay that for hardware test.
 
+we can use pyinstaller to produce exe program that run on windows.
+
+###############################################
 
 
 
