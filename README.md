@@ -18,7 +18,7 @@ This file can add the baud_rate that you want.
 
 ###############################################
 
-devkmem:
+devmem2.c:
 you can use devmem to read and srite register.
 
 ###############################################
@@ -90,7 +90,11 @@ this python script base on vocie_board_test.py.
 
 ###############################################
 
+rtc_test.c:
 
+you can use rtc_test to read rtc time.
+
+###############################################
 
 
 
