@@ -1,5 +1,11 @@
-
 /*
+
+rtc_test -r
+rtc_test -w2019 
+
+w 后面跟(1900 - 2100)
+
+write time: 2019-10-05, 02:30:15 
 
 */
 
@@ -14,88 +20,129 @@
 #include <errno.h>
 #include <string.h>
 
-
-int main()
+int rtc_open()
 {
-        int fd, ret;
-        struct rtc_time rtc_tm;
-        unsigned long data;
+	int fd, ret;
 
-        fd = open("/dev/rtc0", O_RDWR, 0);   
-        if (fd == -1)
-        {
-			perror("/dev/rtc0");
-			exit(errno);
-        }
+	fd = open("/dev/rtc0", O_RDWR, 0);   
+	if (fd == -1)
+	{
+		perror("/dev/rtc0");
+		exit(errno);
+	}
+	
+	return fd;
+}
 
-        printf("get RTC time\n");
-        ret = ioctl(fd, RTC_RD_TIME, &rtc_tm);  //read the current timer
-        if (ret == -1)
-        {
-            perror("rtc ioctl RTC_RD_TIME error");
-        }
-        printf("Current RTC date/time is %d-%d-%d, %02d:%02d:%02d\n",
-                rtc_tm.tm_year+1900, rtc_tm.tm_mon + 1, rtc_tm.tm_mday,  
-				rtc_tm.tm_hour, rtc_tm.tm_min, rtc_tm.tm_sec);
+void rtc_read(int fd)
+{
+	int ret;
+	struct rtc_time rtc_tm;
+	
+	ret = ioctl(fd, RTC_RD_TIME, &rtc_tm);  //read the current timer
+	if (ret == -1)
+	{
+		perror("rtc ioctl RTC_RD_TIME error");
+	}
+	printf("get RTC date/time is %d-%d-%d, %02d:%02d:%02d\n",
+			rtc_tm.tm_year+1900, rtc_tm.tm_mon + 1, rtc_tm.tm_mday,  
+			rtc_tm.tm_hour, rtc_tm.tm_min, rtc_tm.tm_sec);
+	
+	printf("rtc_tm.tm_year = %d\n", rtc_tm.tm_year);
+	
+}
 
-        /* Set the RTC time/date */
-       /* rtc_tm.tm_mday = 31;
-        rtc_tm.tm_mon = 4;      // for example Sep 8
-        rtc_tm.tm_year = 104;
-        rtc_tm.tm_hour = 2;
-        rtc_tm.tm_min = 30;
-        rtc_tm.tm_sec = 0;
-        */
-/*
-// call the read function to wait the Alarm interrupt
-        printf("read RTC time\n");
-        ret = read(fd, &data, sizeof(unsigned long));
-        if (ret == -1)
-        {
-                perror("rtc read error");
-        }
-        printf("rtc read\n");
+void rtc_write(int fd)
+{
+	struct rtc_time rtc_tm;
+	int ret;
 
-// set RTC time
+/* 2019-10-05, 02:30:15 */
+ 	rtc_tm.tm_mday = 05;
+	rtc_tm.tm_mon = 9;
+	rtc_tm.tm_year = 119;
+	rtc_tm.tm_hour = 2;
+	rtc_tm.tm_min = 30;
+	rtc_tm.tm_sec = 15;
+        
+	
+	ret == ioctl(fd, RTC_SET_TIME, &rtc_tm);
+	if (ret == -1)
+	{
+		perror("rtc ioctl RTC_SET_TIME error");
+	}
+	
+	printf("set RTC date/time is %d-%d-%d, %02d:%02d:%02d\n",
+			rtc_tm.tm_year+1900, rtc_tm.tm_mon + 1, rtc_tm.tm_mday,  
+			rtc_tm.tm_hour, rtc_tm.tm_min, rtc_tm.tm_sec);
+	
+}
 
-        printf("set RTC time\n");
-        ret == ioctl(fd, RTC_SET_TIME, &rtc_tm);
-        if (ret == -1)
-        {
-                perror("rtc ioctl RTC_SET_TIME error");
-        }
-        printf("Set Current RTC date/time to %d-%d-%d, %02d:%02d:%02d\n",
-                rtc_tm.tm_mday, rtc_tm.tm_mon + 1, rtc_tm.tm_year,
-                rtc_tm.tm_hour, rtc_tm.tm_min, rtc_tm.tm_sec);
-        printf("Get RTC time\n");
-        ret = ioctl(fd, RTC_RD_TIME, &rtc_tm);
-        if (ret == -1)
-        {
-                perror("rtc ioctl RTC_RD_TIME error");
-        }
-        printf("Current RTC date/time is %d-%d-%d, %02d:%02d:%02d\n",
-                rtc_tm.tm_mday, rtc_tm.tm_mon + 1, rtc_tm.tm_year,
-                rtc_tm.tm_hour, rtc_tm.tm_min, rtc_tm.tm_sec);
+/* test write year */
+void rtc_write_year(int fd, int year)
+{
+	struct rtc_time rtc_tm;
+	int ret;
+	
+	year = year -1900;
 
-        rtc_tm.tm_sec += 50;
-        if (rtc_tm.tm_sec >= 60)
-        {
-                rtc_tm.tm_sec %= 60;
-                rtc_tm.tm_min++;
-        }
-        if (rtc_tm.tm_min == 60)
-        {
-                rtc_tm.tm_min = 0;
-                rtc_tm.tm_hour++;
-        }
-        if (rtc_tm.tm_hour == 24)
-        {
-                rtc_tm.tm_hour = 0;
-        }
-*/
-        printf("RTC tests done");
-		
-        close(fd);
+/* year-10-05, 02:30:15 */
+ 	rtc_tm.tm_mday = 05;
+	rtc_tm.tm_mon = 9;
+	rtc_tm.tm_year = year;
+	rtc_tm.tm_hour = 2;
+	rtc_tm.tm_min = 30;
+	rtc_tm.tm_sec = 15;
+        
+	
+	ret == ioctl(fd, RTC_SET_TIME, &rtc_tm);
+	if (ret == -1)
+	{
+		perror("rtc ioctl RTC_SET_TIME error");
+	}
+	
+	printf("set RTC date/time is %d-%d-%d, %02d:%02d:%02d\n",
+			rtc_tm.tm_year+1900, rtc_tm.tm_mon + 1, rtc_tm.tm_mday,  
+			rtc_tm.tm_hour, rtc_tm.tm_min, rtc_tm.tm_sec);
+	
+}
 
-        return 0;
+void rtc_release(int fd)
+{
+	
+	close(fd);
+	
+}
+
+int main(int argc, char *argv[])  
+{
+	int opt = 0;
+	int fd_rtc, ret, rtc_year;
+	struct rtc_time rtc_tm;
+	unsigned long data;
+	
+	fd_rtc = rtc_open();
+	
+	while (opt != -1)
+	{
+		opt = getopt(argc, argv, "rw::");	
+		switch(opt)
+		{
+			case 'r':
+				rtc_read(fd_rtc);
+				break;
+			case 'w':
+				rtc_year = atoi(optarg);
+				rtc_write_year(fd_rtc, rtc_year); //  rtc_write(fd_rtc);
+				rtc_read(fd_rtc);
+				break;
+
+			default:
+				break;
+		}	
+	}	
+	
+	rtc_release(fd_rtc);
+	
+    return 0;
 }
