@@ -23,12 +23,13 @@ you can use devmem to read and srite register.
 
 ###############################################
 
-key-test:
+key-test.c and key-test-2.c and key_epoll_test.c
+
 you can this file to test your key driver.
 
 ###############################################
 
-gpio_test.sh
+gpio_test_bash.sh and gpio_test_sh.sh
 
 This shell script can test lot size GPIO that you want test.
 

@@ -1,41 +1,32 @@
 #!/bin/sh
-#Test gpio out/in high/low in linux.Write by Kinbo.
-#http://www.jb51.net/article/52382.htm shell 数组
-#2016.12.16
+#Test gpio out/in high/low in linux for sh instead of bash.
+#Write by Kinbo.
 #===========================================================================
 
+lenGpio="496 497 498 499 500 501 502 503 504 505 506 507 508 509 510 511"
 
-gpio_idx=(1 2 3 4 6 7 8 9 10 13 14 25 26 34 35 47 48 49 50 M1 M2 M3 M4)
-
-#no codec version
-#gpio_idx=(1 2 3 4 6 7 8 9 10 11 12 13 14 25 26 34 35 47 48 49 50 M1 M2 M3 M4)
-
-#MFT version
-gpio_idx=(1 6 7 8 9 10 13 14)
-
-lenGpio=${#gpio_idx[@]}
-echo "Test gpio sum: ${lenGpio}"
+echo "Test gpio start"
 
 
 case $1 in
 
 	export     )
 		echo " "
-		for((i=0;i<$lenGpio;i++))
+		for i in $lenGpio;
 		do
-			gpio_num=${gpio_idx[$i]}
+			gpio_num=$i
 			echo "export gpio${gpio_num}"
 			echo $gpio_num > /sys/class/gpio/export
 		done
 
 		;;
-		
+
 	unexport   )
 		echo " "
 		i=0
-		while [ $i -lt $lenGpio ]
+		for i in $lenGpio;
 		do
-			gpio_num=${gpio_idx[$i]}
+			gpio_num=$i
 			echo "unexport gpio${gpio_num}"
 			echo $gpio_num > /sys/class/gpio/unexport
 			let i++
@@ -44,25 +35,25 @@ case $1 in
 		;;
 	out | in  )
 		echo " "
-		for((i=0;i<$lenGpio;i++))
+		for i in $lenGpio;
 		do
-			gpio_num=${gpio_idx[$i]}
+			gpio_num=$i
 			echo "direction ${1} gpio${gpio_num}"
 			echo $1 > /sys/class/gpio/gpio$gpio_num/direction
-		done 
+		done
 
 
 		;;
 	read      )
 		echo " "
-		for((i=0;i<$lenGpio;i++))
+		for i in $lenGpio;
 		do
-			gpio_num=${gpio_idx[$i]}
+			gpio_num=$i
 			echo "cat gpio${gpio_num} value:"
 			cat /sys/class/gpio/gpio$gpio_num/value
 		done
 
-			
+
 		;;
 	--h | -h | h  )
 		echo "*****************************************************"
@@ -73,22 +64,22 @@ case $1 in
 		echo "         out 1:       output 1 "
 		echo "         in:          input, direction is in "
 		echo "         read:        read the gpio value "
-		echo "         h:           help "	
-		echo "*****************************************************"	
+		echo "         h:           help "
+		echo "*****************************************************"
 		;;
-	*         )                
+	*         )
 		echo "unknown argument arg"
 		;;
 esac
 
 if [ "$1" == "out" ]
 then
-	if [ $2 == 1 -o $2 == 0 ] 
+	if [ $2 == 1 -o $2 == 0 ]
 	then
 		echo " "
-		for((i=0;i<$lenGpio;i++))
+		for i in $lenGpio;
 		do
-			gpio_num=${gpio_idx[$i]}
+			gpio_num=$i
 			echo "set gpio${gpio_num} value to ${2}"
 			echo $2 > /sys/class/gpio/gpio$gpio_num/value
 		done
@@ -97,61 +88,3 @@ then
 		echo "$2 is unknow argument"
 	fi
 fi
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

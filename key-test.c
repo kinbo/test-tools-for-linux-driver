@@ -4,47 +4,39 @@
 #include <fcntl.h>
 #include <linux/input.h>
 
-#define POWER_KEY_START_EFFECT 10*60
+#define NOKEY 0
 
 int main()
 {
 	int keys_fd;	                 //按键句柄	
-
-
-	struct input_event ev;
-	int retval;
+	struct input_event t;
       
-    keys_fd = open("/dev/input/event0", O_RDONLY);
+    keys_fd = open("/dev/input/event1", O_RDONLY);
 
 	if(keys_fd<=0)
 	{
-                printf("open /dev/input/event0 device error!\n");
+        printf("open /dev/input/event1 device error!\n");
 		return 0;
 	}
 
-
-	
 	while(1)
 	{	
-		retval = read(keys_fd,&ev,sizeof(ev));
-       if(retval == sizeof(ev)) 
+       if(read(keys_fd,&t,sizeof(t))==sizeof(t))
 	  {
-		  printf("hjb type:%d,coe:%d,value:%d,time: %d\n",ev.type,ev.code,ev.value,ev.time.tv_sec);
-		 if(ev.type==EV_KEY && ev.time.tv_sec > POWER_KEY_START_EFFECT)			//获取的是按键消息
+		 if(t.type==EV_KEY)			//获取的是按键消息
 		{
-			
-			if(ev.value==1)
+			while(t.value==1)
 			{	
-				printf("key %d Pressed time: %d\n",ev.code,ev.time);
+				sleep(1);
+				printf("key %d Pressed \n",t.code,t.time);
 			}
-			if(ev.value==0)    //返回值是1或者0
-   			    printf("key %d %s, time:\n",ev.code,(ev.value)?"Pressed":"Released" ,ev.time);     //1表按下，0表弹起
-  		}
-	}
-	}	
-	close(keys_fd);
+			if(t.value==0)    //返回值是1或者0
+			    printf("key %d %s\n",t.code,(t.value)?"Pressed":"Released");     //1表按下，0表弹起
+		}
+	  }
+		close(keys_fd);
 	
         return 0;
-
+	}
 }
 
