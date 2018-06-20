@@ -97,6 +97,34 @@ you can use rtc_test to read rtc time.
 
 ###############################################
 
+gpio-test-number.sh:
+
+test single gpio out or in
+
+###############################################
+
+i2c_test.c:
+
+you can use this code to test i2c, but the better way is porting i2c-tools
+
+###############################################
+
+led_three_color.sh:
+
+you can use this script to test thress-color led.
+
+###############################################
+
+mem_ps.sh:
+
+this script can print the memery of pid
+
+###############################################
+
+
+
+
+
 
 
 
