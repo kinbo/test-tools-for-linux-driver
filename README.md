@@ -121,9 +121,24 @@ this script can print the memery of pid
 
 ###############################################
 
+led_three_color.c:
 
+led_three_color()：
+	set color for RGB-LED
 
+led_trigger_open():
+	enable led twinkle, default twinkle frequency is 1Hz
 
+led_triger_close():
+	disable led twinkle
+
+led_timer_set():
+	set twinkle frequency, this function should be executed after led_trigger_open().
+
+led_test():
+	this function only for led test and you can refer the code to finish other requirement.
+
+###############################################
 
 
 
