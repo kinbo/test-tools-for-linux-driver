@@ -147,7 +147,6 @@ def main():
     sendtime=datetime.datetime.now()
     a = input("请选择测试类型 \n\
 3.路由器密码设置\n\
-4.路由器密码验证\n\
 58.查看接入设备列表\n\
 59.修改接入设备名称\n\
 61.设置接入设备限速\n\
@@ -160,11 +159,7 @@ def main():
 请输入：".decode('utf-8').encode('gbk'))
     if(a==3):
         testapi(setRouterPassword())
-        main()
-    elif(a==4):
-        testapiPassword(verifyRouterPassword())
-        testapi(getDefaultWanConfig())
-        main()   
+        main() 
     elif(a==58):
         testapiPassword(verifyRouterPassword())
         testapi(get_device_list())
